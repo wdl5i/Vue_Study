@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="div1">
+    <p>{{ searchText1 }}</p>
+    <input v-model="searchText1">
+</div>
+<div id="div2">
+    <p>{{ searchText2 }}</p>
+    <!--等价于v-model="searchText2"-->
+    <input
+        v-bind:value="searchText2"
+        v-on:input="searchText2 = $event.target.value">
+</div>
+
+
+<div id="div3">
+    <p>{{ searchText3 }} </p>
+    <custom-input v-model="searchText3"/>
+</div>
+<div id="div4">
+    <p>{{ searchText4 }} </p>
+    <!--等价于v-model="searchText4"-->
+    <custom-input
+        v-bind:value="searchText4"
+        v-on:input="searchText4 = $event" />
+</div>
+
+<div id="div5">
+    <base-checkbox v-model="lovingVue"></base-checkbox>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+    new Vue({
+        el: "#div1",
+        data: {
+            searchText1: "Hello World!"
+        }
+    })
+
+    new Vue({
+        el: "#div2",
+        data: {
+            searchText2: "Hello World!"
+        }
+    })
+
+    Vue.component('custom-input', {
+        props: ['value'],
+        template: `
+            <input
+              v-bind:value="value"
+              v-on:input="$emit('input', $event.target.value)"
+            >
+        `
+    })
+
+    new Vue({
+        el: "#div3",
+        data: {
+            searchText3: "div3"
+        }
+    })
+
+    new Vue({
+        el: "#div4",
+        data: {
+            searchText4: "div4"
+        }
+    })
+
+    Vue.component('base-checkbox', {
+        model: {
+            prop: 'checked',
+            event: 'change'
+        },
+        props: {
+            checked: Boolean
+        },
+        template: `
+        <input
+          type="checkbox"
+          v-bind:checked="checked"
+          v-on:change="$emit('change', $event.target.checked)"
+        >
+        `
+    })
+
+    new Vue({
+        el: "#div5"
+    })
+</script>
+</body>
+</html>

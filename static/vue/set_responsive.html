@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="../js/vue.js"></script>
+<script>
+/***************************Array Begin**********************************************/
+    //    由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+    //
+    //    当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+    //    当你修改数组的长度时，例如：vm.items.length = newLength
+    var vm = new Vue({
+        data: {
+            items: ['a', 'b', 'c']
+        }
+    })
+
+    vm.items[1] = 'x' // 不是响应性的
+    // 解决方式
+    // 1. Vue.set(vm.items, indexOfItem, newValue)
+    // 2. vm.$set(vm.items, indexOfItem, newValue)
+    // 3. vm.items.splice(indexOfItem, 1, newValue)
+
+    vm.items.length = 2 // 不是响应性的
+    //解决方式
+    //1. vm.items.splice(newLength)
+/***************************Array End**********************************************/
+/***************************Object Begin**********************************************/
+    var vm1 = new Vue({
+        data: {
+            userProfile: {
+                name: 'Anika'
+            }
+        }
+    })
+
+    var vm2 = new Vue({
+        data: {
+            userProfile: {
+                name: 'Anika'
+            }
+        }
+    })
+
+//你可以添加一个新的 age 属性到嵌套的 userProfile 对象：
+
+    Vue.set(vm1.userProfile, 'age', 27)
+//你还可以使用 vm.$set 实例方法，它只是全局 Vue.set 的别名：
+
+    vm2.$set(vm2.userProfile, 'age', 27)
+/***************************Object End**********************************************/
+
+
+
+</script>
+
+
+</body>
+</html>

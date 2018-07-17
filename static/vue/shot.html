@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div id="div1">
+    <navigation-link url="/profile">
+        Your Profile
+    </navigation-link>
+</div>
+
+<!--
+<div class="container">
+    <header>
+        <slot name="header"></slot>
+    </header>
+    <main>
+        <slot></slot>
+    </main>
+    <footer>
+        <slot name="footer"></slot>
+    </footer>
+</div>
+
+<base-layout>
+    <template slot="header">
+        <h1>Here might be a page title</h1>
+    </template>
+
+    <p>A paragraph for the main content.</p>
+    <p>And another one.</p>
+
+    <template slot="footer">
+        <p>Here's some contact info</p>
+    </template>
+</base-layout>
+-->
+
+<!--
+另一种 slot 特性的用法是直接用在一个普通的元素上：
+<base-layout>
+    <h1 slot="header">Here might be a page title</h1>
+
+    <p>A paragraph for the main content.</p>
+    <p>And another one.</p>
+
+    <p slot="footer">Here's some contact info</p>
+</base-layout>-->
+
+
+<script src="../js/vue.js"></script>
+<script>
+
+    Vue.component('navigation-link', {
+        template: `
+            <a
+              v-bind:href="url"
+              class="nav-link"
+            ><slot></slot></a>
+        `,
+        props:['url']
+    })
+   new Vue({
+       el:"#div1"
+   })
+
+</script>
+
+
+</body>
+</html>

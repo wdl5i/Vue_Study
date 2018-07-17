@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<!-- 在 `v-bind` 中 -->
+<!--<div v-bind:id="rawId | formatId"></div>-->
+
+<!--过滤器是 JavaScript 函数，因此可以接收参数：
+这里，filterA 被定义为接收三个参数的过滤器函数。
+其中 message 的值作为第一个参数，
+普通字符串 'arg1' 作为第二个参数，
+表达式 arg2 的值作为第三个参数。
+
+{{ message | filterA('arg1', arg2) }}-->
+
+<!-- 在双花括号中 -->
+<div id="div1">
+    {{ message | capitalize | capitalize1 }}
+    <input v-model="message" />
+</div>
+<script src="../js/vue.js"></script>
+<script>
+
+    //或者在创建 Vue 实例之前全局定义过滤器：
+    Vue.filter('capitalize', function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+    })
+
+    new Vue({
+        el: "#div1",
+        data: function () {
+            return {
+                message: 'john'
+            }
+        },
+        //你可以在一个组件的选项中定义本地的过滤器：
+        filters: {
+            capitalize1: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(1).toUpperCase() + value.slice(1)
+            }
+        }
+    })
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

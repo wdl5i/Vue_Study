@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div>
+    <ul id="app">
+        <li v-for="n in evenNumbers">{{ n }}</li>
+    </ul>
+    <ul id="app1">
+        <li v-for="n in even(numbers)">{{ n }}</li>
+    </ul>
+</div>
+<div id="app2">
+    <span v-for="n in 10">{{ n }} </span>
+</div>
+
+<ul id="app3" v-if="items.length">
+    <template v-for="item in items" v-if="!item.isComplete">
+        <li>{{ item.msg }}</li>
+        <li class="divider"></li>
+    </template>
+</ul>
+
+
+
+<script src="../js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            numbers: [ 1, 2, 3, 4, 5 ]
+        },
+        computed: {
+            evenNumbers: function () {
+                return this.numbers.filter(function (number) {
+                    return number % 2 === 0
+                })
+            }
+        }
+    })
+
+    var app1 = new Vue({
+        el: '#app1',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        },
+        methods: {
+            even: function (numbers) {
+                return numbers.filter(function (number) {
+                    return number % 2 === 1
+                })
+            }
+        }
+    })
+
+    var app2 = new Vue({
+        el: '#app2',
+        data: {
+            numbers: [1, 2, 3, 4, 5]
+        }
+    })
+
+    var app3 = new Vue({
+        el: '#app3',
+        data: {
+            items: [{msg:"a", isComplete:true},{msg:"b", isComplete:false},{msg:"c", isComplete:true}]
+        }
+    })
+
+
+
+
+</script>
+
+
+</body>
+</html>

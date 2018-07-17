@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<!--
+当点击按钮时，每个组件都会各自独立维护它的 count。因为你每用一次组件，就会有一个它的新实例被创建。
+-->
+<div id="components-demo">
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+    <button-counter></button-counter>
+</div>
+
+<div id="prop-demo">
+    <blog-post title="My journey with Vue"></blog-post>
+    <blog-post title="Blogging with Vue"></blog-post>
+    <blog-post title="Why Vue is so fun"></blog-post>
+</div>
+
+<div id="blog-post-demo">
+    <blog-post
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:title="post.title"
+    ></blog-post>
+</div>
+
+
+<script src="../js/vue.js"></script>
+<script>
+   /*
+    定义一个名为 button-counter 的新组件
+    为了能在模板中使用，这些组件必须先注册以便 Vue 能够识别。
+    这里有两种组件的注册类型：全局注册和局部注册。 Vue.component是全局注册的
+    全局注册的组件可以用在其被注册之后的任何 (通过 new Vue) 新创建的 Vue 根实例，
+    也包括其组件树中的所有子组件的模板中。
+    */
+    Vue.component('button-counter', {
+        //一个组件的 data 选项必须是一个函数,因此每个实例可以维护一份被返回对象的独立的拷贝
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+    new Vue({ el: '#components-demo' })
+
+   Vue.component('blog-post', {
+       props: ['title'],
+       template: '<h3>{{ title }}</h3>'
+   })
+    new Vue({el: '#prop-demo'})
+
+    new Vue({
+       el: '#blog-post-demo',
+       data: {
+           posts: [
+               { id: 1, title: 'My journey with Vue1' },
+               { id: 2, title: 'Blogging with Vue1' },
+               { id: 3, title: 'Why Vue is so fun1' },
+           ]
+       }
+   })
+
+  /* 有些 HTML 元素，诸如 <ul>、<ol>、<table> 和 <select>，对于哪些元素可以出现在其内部是有严格限制的。
+     而有些元素，诸如 <li>、<tr> 和 <option>，只能出现在其它某些特定的元素内部。
+    这会导致我们使用这些有约束条件的元素时遇到一些问题。例如：
+   <table>
+   <blog-post-row></blog-post-row>
+   </table>
+   这个自定义组件 <blog-post-row> 会被作为无效的内容提升到外部，并导致最终渲染结果出错。
+   幸好这个特殊的 is 特性给了我们一个变通的办法：
+   <table>
+      <tr is="blog-post-row"></tr>
+   </table>
+   需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的：
+    字符串 (例如：template: '...')
+    单文件组件 (.vue)
+    <script type="text/x-template">
+   */
+
+
+
+</script>
+</body>
+</html>
